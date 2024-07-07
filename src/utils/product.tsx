@@ -42,9 +42,9 @@ export function getProductPrice({ price, discountPercentage }: Product) {
 
 export function getRatingAsStars(value: number) {
   const rating = value || 1
-  const fullStars = Math.round(rating)
+  const fullStars = Math.trunc(rating)
   const halfStars = rating === fullStars ? 0 : 1
-  const emptyStars = 5 - fullStars - halfStars
+  const emptyStars = Math.max(5 - fullStars - halfStars, 0)
 
   return (
     <div className="flex gap-1 w-20">
