@@ -37,14 +37,12 @@ export const productsApiSlice = createApi({
       query: () => "/categories",
     }),
 
-    getProductsByCategories: build.query<ProductsCategoriesApiResponse, string>(
-      {
-        query: (category: string) => `/category/${category}`,
-        providesTags: (_result, _error, category) => [
-          { type: "Products", category },
-        ],
-      }
-    ),
+    getProductsByCategory: build.query<ProductsApiResponse, string>({
+      query: (category: string) => `/category/${category}`,
+      providesTags: (_result, _error, category) => [
+        { type: "Products", category },
+      ],
+    }),
 
     searchProducts: build.query<ProductsApiResponse, string>({
       query: (q: string) => `/search?q=${q}`,
@@ -60,6 +58,6 @@ export const productsApiSlice = createApi({
 export const {
   useGetAllProductsQuery,
   useGetProductCategoriesQuery,
-  useGetProductsByCategoriesQuery,
+  useGetProductsByCategoryQuery,
   useSearchProductsQuery,
 } = productsApiSlice

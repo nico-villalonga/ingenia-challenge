@@ -1,3 +1,8 @@
+export interface Option {
+  label: string
+  value: string
+}
+
 interface Review {
   rating: number
   comment: string
