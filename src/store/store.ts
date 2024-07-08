@@ -1,8 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { productsApiSlice } from "./api/products.api"
+import { searchSlice } from "./slices/search.slice"
 
-const rootReducer = combineSlices(productsApiSlice)
+const rootReducer = combineSlices(searchSlice, productsApiSlice)
 export type RootState = ReturnType<typeof rootReducer>
 
 export const makeStore = () => {
