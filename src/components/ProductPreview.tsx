@@ -1,14 +1,14 @@
 import type { Product } from "@/types"
 import { getProductPrice, getProductReviews } from "@/utils/product"
 
-export function ProductPreview(product: Product) {
+export default function ProductPreview({ product }: { product: Product }) {
   return (
     <article className="flex flex-col sm:flex-row gap-8 md:gap-6 p-10 bg-white max-w-2xl">
       <div className="flex justify-center">
         <div className="size-40">
           <img
             src={product.thumbnail}
-            alt={product.title}
+            alt="Product thumbnail image"
             className="m-auto h-full"
           />
         </div>
@@ -36,7 +36,7 @@ export function ProductPreview(product: Product) {
               {product.shippingInformation}
             </p>
             <div className="w-full sm:w-32 h-8">
-              <button className="py-4 px-5 rounded-md bg-indigo-100 text-indigo-600 font-semibold text-md w-full h-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-200">
+              <button className="py-4 px-5 rounded-md bg-cyan-100 text-cyan-600 text-sm w-full h-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-cyan-200">
                 Add to cart
               </button>
             </div>

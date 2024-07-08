@@ -7,12 +7,12 @@ import {
   getRatingAsStars,
 } from "@/utils/product"
 
-export function ProductDetail(product: Product) {
+export default function ProductDetail({ product }: { product: Product }) {
   return (
-    <div className="w-full mx-auto p-10">
-      <div className="bg-white">
+    <div className="w-full mx-auto px-10 py-20">
+      <div className="bg-white max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 bg-white max-w-5xl min-w-96 p-8 mx-auto">
-          <div className="h-full max-lg:mx-auto">
+          <div className="h-full max-lg:mx-auto max-h-96">
             <img
               src={product.images[0]}
               className="max-lg:mx-auto lg:ml-auto h-full"
@@ -43,7 +43,7 @@ export function ProductDetail(product: Product) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button className="group py-4 px-5 rounded-md bg-indigo-50 text-indigo-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-indigo-100">
+                <button className="py-2 px-5 rounded-md bg-cyan-100 text-cyan-600 text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-cyan-200">
                   Add to cart
                 </button>
               </div>
