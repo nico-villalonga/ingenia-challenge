@@ -1,36 +1,39 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Some notes
+
+I did not use dummyjson cart API since it does not persist. I went ahead and create a cart slice to manage all cart interactions.
+<br/>
+
+The search bar works as follow:
+
+- If no category not search term then the API will look for all products (limit 30)
+- If a search term is provided but no category, then it will get from API `/search?q={q}`
+- If category is selected but no search term is provided, then it get from API `/category/{category}`
+- If category is selected and search term is provided, then data is fetched from API and filtered locally before output
+
+This works in this manner since the API does not expose a filtering mechanism for product categories.
+<br>
+The search bar is missing a clear button to reset the filters.
+<br/>
+
+Pagination is fixed to 30 items (same as API). Its a basic pagination component since it does not have ellipsis to group pages. So it needs to keep limit in 30 so it does not break UI (otherwise it will grow too much).
+
+<br/>
+
+Loading, empty and error states are not handled. So you might see some empty components at loading time and then readjust when data available.
+<br/>
+Validation and error handling is missing. The API is well populated and there are no missing values, so there should be no issues while plating with the app, but it should definitely have checks
+<br/>
+So dont try to go to an unexisting detail page through direct url link (ie `/products/0`) since it will break.
+
 ## Getting Started
 
-First, run the development server:
+First install dependencies and run the development server:
 
 ```bash
+npm i
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
