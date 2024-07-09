@@ -1,5 +1,5 @@
 import type { Product } from "@/types"
-import { getProductDiscount } from "@/utils/product"
+import { getProductPricing } from "@/utils/product"
 
 export function getProductTags({ tags }: Product) {
   if (!tags.length) return null
@@ -15,7 +15,7 @@ export function getProductTags({ tags }: Product) {
 }
 
 export function getProductPrice(product: Product, includeOffTag = true) {
-  const { discountValue, hasDiscount } = getProductDiscount(product)
+  const { discountValue, hasDiscount } = getProductPricing(product)
   const { price } = product
   const offTag = includeOffTag ? " OFF" : ""
 
@@ -49,6 +49,11 @@ export function getRatingAsStars(value: number) {
   const halfStars = rating === fullStars ? 0 : 1
   const emptyStars = Math.max(5 - fullStars - halfStars, 0)
 
+  /**
+   * NOTE:
+   * This might be bit confusing since its using a single base svg to construct three different svg
+   * It would be a bit clear if each is defined on its own svg file and then just importing each accordingly.
+   */
   return (
     <div className="flex gap-1 w-20">
       <div>
@@ -109,6 +114,7 @@ export function getRatingAsStars(value: number) {
   )
 }
 
+// TODO: This should be its own component
 export function getProductReviews({ rating, reviews }: Product) {
   if (!reviews.length) return null
 

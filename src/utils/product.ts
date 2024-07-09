@@ -1,8 +1,11 @@
 import { Product } from "@/types"
 
-export function getProductDiscount({ price, discountPercentage }: Product) {
+export function roundPrice(value: number) {
+  return Number(value.toFixed(2))
+}
+export function getProductPricing({ price, discountPercentage }: Product) {
   const discountValue = price - Math.round(price * discountPercentage) / 100
-  const discountedValue = Number((price - discountValue).toFixed(2))
+  const discountedValue = roundPrice(price - discountValue)
   const hasDiscount = discountValue !== price
   return { discountValue, discountedValue, hasDiscount }
 }

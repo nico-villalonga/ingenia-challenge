@@ -1,6 +1,6 @@
 import { createAppSlice } from "@/store/createAppSlice"
 import type { Product } from "@/types"
-import { getProductDiscount } from "@/utils/product"
+import { getProductPricing } from "@/utils/product"
 
 interface CartProduct extends Product {
   quantity: number
@@ -59,7 +59,7 @@ export const cartSlice = createAppSlice({
   selectors: {
     selectDiscountedTotal: (state) =>
       state.products.reduce((acc, curr) => {
-        const { discountedValue } = getProductDiscount(curr)
+        const { discountedValue } = getProductPricing(curr)
         return acc + discountedValue * curr.quantity
       }, 0),
     selectProducts: (state) => state.products,

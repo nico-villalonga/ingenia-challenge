@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { getProductPrice } from "@/components/utils/product"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import {
@@ -9,7 +10,7 @@ import {
   selectTotal,
   updateQuantity,
 } from "@/store/slices/cart.slice"
-import Link from "next/link"
+import { roundPrice } from "@/utils/product"
 
 export default function Page() {
   const dispatch = useAppDispatch()
@@ -74,10 +75,13 @@ export default function Page() {
                           type="text"
                           id="counter-input"
                           className="w-10 shrink-0 border-0 bg-transparent text-center text-sm font-medium text-gray-900 focus:outline-none focus:ring-0"
-                          placeholder=""
                           value={product.quantity}
-                          defaultValue={1}
                           required
+                          /**
+                           * Just empty onchange so there is no error on console
+                           * The change is handled though the buttons click
+                           */
+                          onChange={() => {}}
                         />
 
                         <button
@@ -170,7 +174,7 @@ export default function Page() {
                       Original price
                     </dt>
                     <dd className="text-base font-medium text-gray-900">
-                      ${total}
+                      ${roundPrice(total)}
                     </dd>
                   </dl>
 
@@ -179,7 +183,7 @@ export default function Page() {
                       Savings
                     </dt>
                     <dd className="text-base font-medium text-green-600">
-                      ${discount}
+                      ${roundPrice(discount)}
                     </dd>
                   </dl>
                 </div>
@@ -187,7 +191,7 @@ export default function Page() {
                 <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
                   <dt className="text-base font-bold text-gray-900">Total</dt>
                   <dd className="text-base font-bold text-gray-900">
-                    ${total - discount}
+                    ${roundPrice(total - discount)}
                   </dd>
                 </dl>
               </div>
