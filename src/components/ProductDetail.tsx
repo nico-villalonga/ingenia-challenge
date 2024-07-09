@@ -1,13 +1,19 @@
-import type { Product } from "@/types"
+"use client"
+
+import { useAppDispatch } from "@/store/hooks"
+import { addProduct } from "@/store/slices/cart.slice"
 import { formatReviewDate } from "@/utils/date"
 import {
   getProductPrice,
   getProductReviews,
   getProductTags,
   getRatingAsStars,
-} from "@/utils/product"
+} from "./utils/product"
+import type { Product } from "@/types"
 
 export default function ProductDetail({ product }: { product: Product }) {
+  const dispatch = useAppDispatch()
+
   return (
     <div className="w-full mx-auto px-10 py-20">
       <div className="bg-white max-w-5xl mx-auto">
@@ -43,7 +49,12 @@ export default function ProductDetail({ product }: { product: Product }) {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button className="py-2 px-5 rounded-md bg-cyan-100 text-cyan-600 text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-cyan-200">
+                <button
+                  onClick={() =>
+                    dispatch(addProduct({ ...product, quantity: 1 }))
+                  }
+                  className="py-2 px-5 rounded-md bg-cyan-100 text-cyan-600 text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-cyan-200"
+                >
                   Add to cart
                 </button>
               </div>
