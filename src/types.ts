@@ -44,3 +44,15 @@ export interface Product {
   images: string[]
   thumbnail: string
 }
+
+export interface CartProduct {
+  id: number
+  quantity: number
+}
+
+export interface ProductsApiResponse {
+  products: Product[]
+  total: number
+  skip: number
+  limit: number
+}

@@ -1,4 +1,5 @@
 import type { Product } from "@/types"
+import { getProductDiscount } from "@/utils/product"
 
 export function getProductTags({ tags }: Product) {
   if (!tags.length) return null
@@ -13,14 +14,16 @@ export function getProductTags({ tags }: Product) {
   ))
 }
 
-export function getProductPrice({ price, discountPercentage }: Product) {
-  const discountValue = price - Math.round(price * discountPercentage) / 100
-  const hasDiscount = discountValue !== price
+export function getProductPrice(product: Product, includeOffTag = true) {
+  const { discountValue, hasDiscount } = getProductDiscount(product)
+  const { price } = product
+  const offTag = includeOffTag ? " OFF" : ""
+
   const discountLabel = hasDiscount && (
     <p>
       <span className="font-semibold">${discountValue.toFixed(2)}</span>
       <span className="text-green-600 text-xs font-normal pl-2">
-        {discountPercentage}% OFF
+        {product.discountPercentage}%{offTag}
       </span>
     </p>
   )
