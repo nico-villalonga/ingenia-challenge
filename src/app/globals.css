@@ -5,3 +5,8 @@
 body {
   background-color: theme("colors.neutral.200");
 }
+
+.gallery-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}

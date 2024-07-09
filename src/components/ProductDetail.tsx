@@ -10,6 +10,7 @@ import {
   getRatingAsStars,
 } from "./utils/product"
 import type { Product } from "@/types"
+import ProductGallery from "./ProductGallery/ProductGallery"
 
 export default function ProductDetail({ product }: { product: Product }) {
   const dispatch = useAppDispatch()
@@ -19,10 +20,7 @@ export default function ProductDetail({ product }: { product: Product }) {
       <div className="bg-white max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 bg-white max-w-5xl min-w-96 p-8 mx-auto">
           <div className="h-full max-lg:mx-auto max-h-96">
-            <img
-              src={product.images[0]}
-              className="max-lg:mx-auto lg:ml-auto h-full"
-            />
+            <ProductGallery slides={product.images} />
           </div>
           <div className="felx max-w-96 justify-self-center md:justify-self-auto xl:justify-start justify-center items-center content-center">
             <div className="flex flex-col w-full max-w-xl gap-4">
@@ -62,7 +60,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
         </div>
 
-        <div className="p-8">
+        <div className="p-8 pt-0">
           <section className="p-8 before:border-t before:border-solid before:border-neutral-200 before:content-[''] before:block before:h-px before:w-10/12 before:my-10 before:mx-auto">
             <h3 className="text-lg font-semibold">Specifications:</h3>
             <div className="flex flex-col gap-1 pt-4">
