@@ -1,12 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import type { Product } from "@/types"
-
-interface ProductsApiResponse {
-  products: Product[]
-  total: number
-  skip: number
-  limit: number
-}
+import type { ProductsApiResponse } from "@/types"
 
 interface Category {
   slug: string
@@ -14,39 +7,49 @@ interface Category {
   url: string
 }
 
-type ProductsCategoriesApiResponse = Category[]
+type CategoriesApiResponse = Category[]
+
+interface LimitQuery {
+  limit: number
+  skip: number
+}
 
 export const productsApiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com/products" }),
   reducerPath: "productsApi",
-  // Tag types are used for caching and invalidation.
   tagTypes: ["Products"],
   endpoints: (build) => ({
-    getAllProducts: build.query<
-      ProductsApiResponse,
-      { limit: number; skip: number }
-    >({
+    getAllProducts: build.query<ProductsApiResponse, LimitQuery>({
       query: ({ limit = 30, skip = 0 }) => `?limit=${limit}&skip=${skip}`,
-      // `providesTags` determines which 'tag' is attached to the cached data returned by the query.
       providesTags: (_result, _error, params) => [
         { type: "Products", ...params },
       ],
     }),
 
-    getProductCategories: build.query<ProductsCategoriesApiResponse, void>({
+    getProductCategories: build.query<CategoriesApiResponse, void>({
       query: () => "/categories",
     }),
 
-    getProductsByCategory: build.query<ProductsApiResponse, string>({
-      query: (category: string) => `/category/${category}`,
-      providesTags: (_result, _error, category) => [
-        { type: "Products", category },
+    getProductsByCategory: build.query<
+      ProductsApiResponse,
+      LimitQuery & { category: string }
+    >({
+      query: ({ category, limit, skip }) =>
+        `/category/${category}?limit=${limit}&skip=${skip}`,
+      providesTags: (_result, _error, params) => [
+        { type: "Products", ...params },
       ],
     }),
 
-    searchProducts: build.query<ProductsApiResponse, string>({
-      query: (q: string) => `/search?q=${q}`,
-      providesTags: (_result, _error, term) => [{ type: "Products", term }],
+    searchProducts: build.query<
+      ProductsApiResponse,
+      LimitQuery & { query: string }
+    >({
+      query: ({ query, limit, skip }) =>
+        `/search?q=${query}&limit=${limit}&skip=${skip}`,
+      providesTags: (_result, _error, params) => [
+        { type: "Products", ...params },
+      ],
     }),
   }),
 })
